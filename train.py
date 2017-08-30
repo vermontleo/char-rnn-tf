@@ -10,6 +10,7 @@ config_tf = tf.ConfigProto()
 config_tf.gpu_options.allow_growth = True
 config_tf.inter_op_parallelism_threads = 1
 config_tf.intra_op_parallelism_threads = 1
+config_tf.gpu_options.per_process_gpu_memory_fraction = 0.8
 
 file = sys.argv[1]
 data = open(file,'r').read()
