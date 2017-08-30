@@ -11,8 +11,7 @@ config_tf = tf.ConfigProto()
 config_tf.gpu_options.allow_growth = True
 config_tf.inter_op_parallelism_threads = 1
 config_tf.intra_op_parallelism_threads = 1
-config_tf.gpu_options.per_process_gpu_memory_fraction = 0.9
-sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+config_tf.gpu_options.per_process_gpu_memory_fraction = 0.8
 
 config = Config.Config()
 
