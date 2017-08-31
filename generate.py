@@ -7,11 +7,13 @@ import random
 import Config
 import Model
 
-config_tf = tf.ConfigProto()
+config_tf = tf.ConfigProto(allow_soft_placement=True)
 config_tf.gpu_options.allow_growth = True
 config_tf.inter_op_parallelism_threads = 1
 config_tf.intra_op_parallelism_threads = 1
 config_tf.gpu_options.per_process_gpu_memory_fraction = 0.8
+config_tf.gpu_options.allocator_type='BFC'
+#sess=tf.Session(config=config)
 
 config = Config.Config()
 
@@ -131,7 +133,13 @@ def main(_):
                 beam_candidates.sort(key = lambda x:x[0], reverse = True) # decreasing order
                 beams = beam_candidates[:beam_size] # truncate to get new beams
 
-            print 'Generated Result: ',''.join(beams[0][1])
-
+            output = u'生成结果: \r\n',''.join(beams[0][1])
+            output = output.__str__().decode('unicode_escape').replace(',','   ',1).replace(')','').replace('(','').replace('u','').replace('\'','').encode('utf-8')
+            try:
+                with open(config.gen_path,'w') as f:
+                    for i in output:
+                        f.write(i)
+            except:
+                print u'无法写入内容！'
 if __name__ == "__main__":
     tf.app.run()
