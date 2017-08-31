@@ -6,11 +6,13 @@ import cPickle
 import Config
 import Model
 
-config_tf = tf.ConfigProto()
+config_tf = tf.ConfigProto(allow_soft_placement=True)
 config_tf.gpu_options.allow_growth = True
 config_tf.inter_op_parallelism_threads = 1
 config_tf.intra_op_parallelism_threads = 1
 config_tf.gpu_options.per_process_gpu_memory_fraction = 0.8
+config_tf.gpu_options.allocator_type='BFC'
+#sess=tf.Session(config=config)
 
 file = sys.argv[1]
 data = open(file,'r').read()
